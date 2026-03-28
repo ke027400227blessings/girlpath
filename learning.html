@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Support | Girl Path</title>
+    <style>
+        :root {
+            --primary: #8e44ad;
+            --secondary: #9b59b6;
+            --accent: #e74c3c;
+            --light: #f9f9f9;
+            --dark: #333;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .quick-exit {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--accent);
+            color: var(--white);
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            z-index: 1000;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(231, 76, 60, 0.3);
+        }
+        
+        .quick-exit:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+        
+        nav {
+            background: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            margin-top: 45px;
+            position: sticky;
+            top: 45px;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links a {
+            color: var(--dark);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--primary); }
+        
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+        
+        .hero-section {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-section h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(142, 68, 173, 0.3);
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .tip-card {
+            background: #f3e5f5;
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .tip-card:hover {
+            background: #e1bee7;
+            transform: translateY(-5px);
+        }
+        
+        .tip-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f3e5f5;
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .checklist-item:hover {
+            background: #e1bee7;
+        }
+        
+        .checklist-item.completed {
+            background: #d5f5e3;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        
+        .checklist-item input {
+            width: auto;
+            margin: 0;
+        }
+        
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .subject-card {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(142, 68, 173, 0.2);
+        }
+        
+        .subject-icon {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+        
+        .subject-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 4rem 2rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-section h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { margin-bottom: 0.8rem; }
+        
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover { color: var(--secondary); }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #555;
+            color: #999;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="quick-exit" onclick="window.location.replace('https://www.google.com')">
+        ⚠️ Need to leave quickly? 🚪 Quick Exit
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">💜 Girl Path</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="safety.html">🛡️ Safety</a>
+                <a href="mental-support.html">💙 Mental Support</a>
+                <a href="mentorship.html">👥 Mentorship</a>
+                <a href="smartcareer.html">🚀 Career</a>
+                <a href="learning.html">📚 Learning</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="hero-section fade-in">
+            <h1>📚 Learn Smarter, Not Harder</h1>
+            <p>Practical study tips, exam checklists, and subject help to boost your confidence and grades.</p>
+        </div>
+
+        <div class="card fade-in">
+            <h2 class="section-title">💡 Pro Study Tips</h2>
+            <p>Evidence-based techniques to help you remember more in less time.</p>
+            
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h3>🔄 Active Recall</h3>
+                    <p>Don't just re-read. Close your book and test yourself. Asking questions forces your brain to retrieve information.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>⏳ Spaced Repetition</h3>
+                    <p>Review material at increasing intervals (1 day, 3 days, 1 week). This fights the "forgetting curve".</p>
+                </div>
+                <div class="tip-card">
+                    <h3>🍅 Pomodoro Technique</h3>
+                    <p>Study for 25 minutes, then take a 5-minute break. Keeps your brain fresh and prevents burnout.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>🎨 Mind Mapping</h3>
+                    <p>Draw connections between ideas visually. Great for essays, history, and complex science topics.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>😴 Sleep & Study</h3>
+                    <p>Your brain consolidates memory while you sleep. 8 hours of sleep is better than 2 hours of cramming.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>🤝 Teach It</h3>
+                    <p>Explain the concept to a friend (or your pet!). If you can teach it, you truly understand it.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card fade-in">
+            <h2 class="section-title">📝 Exam Preparation Checklist</h2>
+            <p>Check off these tasks to ensure you're fully ready before exam day.</p>
+            
+            <div style="margin-top: 1.5rem;">
+                <div class="checklist-item" onclick="toggleChecklist(this)">
+                    <input type="checkbox">
+                    <span>Create a revision timetable (2 weeks before)</span>
+                </div>
+                <div class="checklist-item" onclick="toggleChecklist(this)">
+                    <input type="checkbox">
+                    <span>Gather all past papers and mark schemes</span>
+                </div>
+                <div class="checklist-item" onclick="toggleChecklist(this)">
+                    <input type="checkbox">
+                    <span>Pack your bag: Pens, pencils, calculator, ID</span>
+                </div>
+                <div class="checklist-item" onclick="toggleChecklist(this)">
+                    <input type="checkbox">
+                    <span>Check exam location and transport route</span>
+                </div>
+                <div class="checklist-item" onclick="toggleChecklist(this)">
+                    <input type="checkbox">
+                    <span>Sleep 8 hours the night before</span>
+                </div>
+                <div class="checklist-item" onclick="toggleChecklist(this)">
+                    <input type="checkbox">
+                    <span>Eat a healthy breakfast on exam day</span>
+                </div>
+                <div class="checklist-item" onclick="toggleChecklist(this)">
+                    <input type="checkbox">
+                    <span>Arrive 15 minutes early</span>
+                </div>
+            </div>
+            
+            <button class="btn" style="margin-top: 1rem;" onclick="resetChecklist()">🔄 Reset Checklist</button>
+        </div>
+
+        <div class="card fade-in">
+            <h2 class="section-title">📖 Subject Help Hub</h2>
+            <p>Select a subject to access summaries, key formulas, and common pitfalls.</p>
+            
+            <div class="subjects-grid">
+                <div class="subject-card">
+                    <span class="subject-icon">📐</span>
+                    <h3>Mathematics</h3>
+                    <p>Algebra, Geometry, Calculus</p>
+                </div>
+                <div class="subject-card">
+                    <span class="subject-icon">🔬</span>
+                    <h3>Sciences</h3>
+                    <p>Biology, Chemistry, Physics</p>
+                </div>
+                <div class="subject-card">
+                    <span class="subject-icon">📝</span>
+                    <h3>English</h3>
+                    <p>Literature, Grammar, Essays</p>
+                </div>
+                <div class="subject-card">
+                    <span class="subject-icon">🏛️</span>
+                    <h3>History</h3>
+                    <p>Timelines, Events, Analysis</p>
+                </div>
+                <div class="subject-card">
+                    <span class="subject-icon">🌍</span>
+                    <h3>Geography</h3>
+                    <p>Maps, Climate, Populations</p>
+                </div>
+                <div class="subject-card">
+                    <span class="subject-icon">💼</span>
+                    <h3>Business</h3>
+                    <p>Economics, Accounting, Mgmt</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#" class="btn">💌 Request a Specific Topic</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>💜 Girl Path</h3>
+                <p>Empowering girls to stay in school, thrive emotionally, and build bright futures. Free. Confidential. For girls aged 13-19.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="safety.html">🛡️ Safety</a></li>
+                    <li><a href="mental-support.html">💙 Mental Support</a></li>
+                    <li><a href="mentorship.html">👥 Mentorship</a></li>
+                    <li><a href="smartcareer.html">🚀 Career</a></li>
+                    <li><a href="learning.html">📚 Learning</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Stay Safe</h3>
+                <ul>
+                    <li><a href="#" onclick="window.location.replace('https://www.google.com')">🚪 Quick Exit</a></li>
+                    <li><a href="safety.html">🔒 Lock This Page</a></li>
+                    <li><a href="https://findahelpline.com">🌍 Find a Helpline</a></li>
+                    <li><em>💡 Tip: Use Incognito mode for extra privacy</em></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Get Involved</h3>
+                <ul>
+                    <li><a href="#">🤝 Volunteer as a Mentor</a></li>
+                    <li><a href="#">📢 Share Girl Path</a></li>
+                    <li><a href="#">💬 Contact Us</a></li>
+                    <li><a href="#">📜 Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2026 Girl Path Initiative • <a href="#">Privacy</a> • <a href="#">Terms</a> • <a href="#" onclick="window.location.replace('https://www.google.com')">Quick Exit</a></p>
+            <p style="margin-top: 1rem;">💜 You are capable, you are smart, and you belong here.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleChecklist(element) {
+            const checkbox = element.querySelector('input');
+            checkbox.checked = !checkbox.checked;
+            if(checkbox.checked) {
+                element.classList.add('completed');
+            } else {
+                element.classList.remove('completed');
+            }
+            saveChecklist();
+        }
+        
+        function saveChecklist() {
+            const items = document.querySelectorAll('.checklist-item');
+            const state = [];
+            items.forEach((item, index) => {
+                state.push(item.querySelector('input').checked);
+            });
+            localStorage.setItem('girlpathLearningChecklist', JSON.stringify(state));
+        }
+        
+        function loadChecklist() {
+            const saved = localStorage.getItem('girlpathLearningChecklist');
+            if(saved) {
+                const state = JSON.parse(saved);
+                const items = document.querySelectorAll('.checklist-item');
+                items.forEach((item, index) => {
+                    if(state[index]) {
+                        item.querySelector('input').checked = true;
+                        item.classList.add('completed');
+                    }
+                });
+            }
+        }
+        
+        function resetChecklist() {
+            if(confirm("Reset your checklist progress?")) {
+                localStorage.removeItem('girlpathLearningChecklist');
+                location.reload();
+            }
+        }
+        
+        window.onload = function() {
+            loadChecklist();
+            
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+        };
+    </script>
+</body>
+</html>

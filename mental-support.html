@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental & Emotional Support | Girl Path</title>
+    <style>
+        :root {
+            --primary: #8e44ad;
+            --secondary: #9b59b6;
+            --accent: #e74c3c;
+            --light: #f9f9f9;
+            --dark: #333;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .quick-exit {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--accent);
+            color: var(--white);
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            z-index: 1000;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(231, 76, 60, 0.3);
+        }
+        
+        .quick-exit:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+        
+        nav {
+            background: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            margin-top: 45px;
+            position: sticky;
+            top: 45px;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links a {
+            color: var(--dark);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--primary); }
+        
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+        
+        .card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(142, 68, 173, 0.3);
+        }
+        
+        .crisis-box {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+        
+        .crisis-box a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px 10px 5px 0;
+        }
+        
+        .breathing-circle {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, #d2b4de 0%, #c39bd3 100%);
+            border-radius: 50%;
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 4s ease-in-out;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--white);
+            box-shadow: 0 5px 20px rgba(142, 68, 173, 0.3);
+        }
+        
+        .breathing-circle.expand {
+            transform: scale(1.5);
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .tool-card {
+            background: #f3e5f5;
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .tool-card:hover {
+            background: #e1bee7;
+            transform: translateY(-5px);
+        }
+        
+        .tool-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .resources-list {
+            margin-top: 1rem;
+        }
+        
+        .resources-list p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .resources-list a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 4rem 2rem 2rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-section h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { margin-bottom: 0.8rem; }
+        
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover { color: var(--secondary); }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #555;
+            color: #999;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="quick-exit" onclick="window.location.replace('https://www.google.com')">
+        ⚠️ Need to leave quickly? 🚪 Quick Exit
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <div class="logo">💜 Girl Path</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="safety.html">🛡️ Safety</a>
+                <a href="mental-support.html">💙 Mental Support</a>
+                <a href="mentorship.html">👥 Mentorship</a>
+                <a href="smartcareer.html">🚀 Career</a>
+                <a href="learning.html">📚 Learning</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="card fade-in" style="text-align: center;">
+            <h2 class="section-title">🌱 Your Safe Space</h2>
+            <p style="font-size: 1.2rem;">You are not alone. Help is available, and healing is possible.</p>
+            
+            <div class="crisis-box">
+                <h3 style="color: var(--accent); margin-bottom: 1rem;">🚨 In Crisis Right Now?</h3>
+                <p>If you are in immediate danger or feeling suicidal, please reach out immediately.</p>
+                <div style="margin-top: 1rem;">
+                    <a href="tel:988" class="btn">🇺🇸 Call 988</a>
+                    <a href="sms:741741" class="btn">🇺🇸 Text HOME to 741741</a>
+                    <a href="tel:116123" class="btn">🇬🇧 UK 116 123</a>
+                    <a href="https://findahelpline.com" class="btn">🌍 Find International</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card fade-in" style="text-align: center;">
+            <h2 class="section-title">🌬️ Calm Your Breath</h2>
+            <p>Follow the circle. Inhale as it expands, exhale as it shrinks.</p>
+            <div id="breath-circle" class="breathing-circle">Breathe</div>
+            <button class="btn" onclick="toggleBreathing()">Start / Stop</button>
+        </div>
+
+        <div class="card fade-in">
+            <h2 class="section-title">🧠 Quick Coping Tools</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3>5-4-3-2-1 Grounding</h3>
+                    <p>Identify 5 things you see, 4 you can touch, 3 you hear, 2 you smell, 1 you taste.</p>
+                </div>
+                <div class="tool-card">
+                    <h3>Sensory Reset</h3>
+                    <p>Hold an ice cube, splash cold water on your face, or squeeze a stress ball.</p>
+                </div>
+                <div class="tool-card">
+                    <h3>Safe Person</h3>
+                    <p>Text one trusted person right now. You don't have to explain, just say "Hi".</p>
+                </div>
+                <div class="tool-card">
+                    <h3>Change Environment</h3>
+                    <p>Step outside for 2 minutes or move to a different room.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card fade-in">
+            <h2 class="section-title">📝 My Personal Support Plan</h2>
+            <p style="margin-bottom: 1rem;">Fill this out for yourself. You can print this page or take a screenshot.</p>
+            <input type="text" placeholder="When I feel overwhelmed, I will try:">
+            <input type="text" placeholder="One person I can text/call:">
+            <input type="text" placeholder="Professional resource I will explore:">
+            <input type="text" placeholder="One small act of self-care I'll do today:">
+            <div style="margin-top: 1rem;">
+                <button class="btn" onclick="alert('Plan saved! Consider taking a screenshot.')">💜 Save Plan</button>
+                <button class="btn" onclick="window.print()">🖨️ Print Page</button>
+            </div>
+        </div>
+
+        <div class="card fade-in">
+            <h2 class="section-title">📚 Helpful Resources</h2>
+            <div class="resources-list">
+                <p><strong>Apps:</strong> Insight Timer, MindShift CBT, myCompass</p>
+                <p><strong>Screenings:</strong> <a href="https://screening.mhaonline.org">Mental Health America</a></p>
+                <p><strong>Support Groups:</strong> NAMI, DBSA, Local Community Centers</p>
+                <p><strong>For Teens:</strong> The Jed Foundation, Teen Line</p>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                    <em>Disclaimer: This page is for informational support only and is not a substitute for professional medical advice.</em>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>💜 Girl Path</h3>
+                <p>Empowering girls to stay in school, thrive emotionally, and build bright futures. Free. Confidential. For girls aged 13-19.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="safety.html">🛡️ Safety</a></li>
+                    <li><a href="mental-support.html">💙 Mental Support</a></li>
+                    <li><a href="mentorship.html">👥 Mentorship</a></li>
+                    <li><a href="smartcareer.html">🚀 Career</a></li>
+                    <li><a href="learning.html">📚 Learning</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Stay Safe</h3>
+                <ul>
+                    <li><a href="#" onclick="window.location.replace('https://www.google.com')">🚪 Quick Exit</a></li>
+                    <li><a href="safety.html">🔒 Lock This Page</a></li>
+                    <li><a href="https://findahelpline.com">🌍 Find a Helpline</a></li>
+                    <li><em>💡 Tip: Use Incognito mode for extra privacy</em></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Get Involved</h3>
+                <ul>
+                    <li><a href="#">🤝 Volunteer as a Mentor</a></li>
+                    <li><a href="#">📢 Share Girl Path</a></li>
+                    <li><a href="#">💬 Contact Us</a></li>
+                    <li><a href="#">📜 Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2026 Girl Path Initiative • <a href="#">Privacy</a> • <a href="#">Terms</a> • <a href="#" onclick="window.location.replace('https://www.google.com')">Quick Exit</a></p>
+            <p style="margin-top: 1rem;">💜 You matter. Keep going.</p>
+        </div>
+    </footer>
+
+    <script>
+        let breathingInterval;
+        let isBreathing = false;
+        
+        function toggleBreathing() {
+            const circle = document.getElementById('breath-circle');
+            if (isBreathing) {
+                clearInterval(breathingInterval);
+                circle.style.transform = 'scale(1)';
+                circle.innerText = 'Breathe';
+                isBreathing = false;
+            } else {
+                circle.style.transition = 'transform 4s ease-in-out';
+                breathingInterval = setInterval(() => {
+                    circle.classList.toggle('expand');
+                    circle.innerText = circle.classList.contains('expand') ? 'Inhale' : 'Exhale';
+                }, 4000);
+                isBreathing = true;
+            }
+        }
+        
+        window.onload = function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+        };
+    </script>
+</body>
+</html>
